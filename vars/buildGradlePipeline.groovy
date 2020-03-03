@@ -1,5 +1,5 @@
 
-def call(){
+def call(Map parameters = [:]){
 
     pipeline {
         agent { label 'generic' }
@@ -62,7 +62,10 @@ def call(){
         }
         post {
             success {
-                println("Successful build from branch: ${env.BRANCH_NAME}")
+                script {
+                    def applicationName = parameters['name']
+                    println("Successful build of ${applicationName} from branch: ${env.BRANCH_NAME}")
+                }
             }
             failure {
                 println("Unsuccessful build number: ${env.BUILD_ID} from ${env.BRANCH_NAME}")
