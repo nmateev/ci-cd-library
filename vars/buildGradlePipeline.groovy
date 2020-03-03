@@ -36,10 +36,10 @@ def call(){
         }
         post {
             success {
-                Notifier.notifyMessage("Successful build from branch: ${env.BRANCH_NAME}")
+                println("Successful build from branch: ${env.BRANCH_NAME}")
             }
             failure {
-                Notifier.notifyMessage("Unsuccessful build number: ${env.BUILD_ID} from ${env.BRANCH_NAME}")
+                println("Unsuccessful build number: ${env.BUILD_ID} from ${env.BRANCH_NAME}")
             }
 
         }
