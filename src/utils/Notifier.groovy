@@ -1,6 +1,6 @@
 package utils
 
-class Notifier {
+class Notifier implements Serializable {
 
     static def notifyMessage(String message){
         println(message)
