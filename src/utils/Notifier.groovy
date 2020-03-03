@@ -2,7 +2,7 @@ package utils
 
 class Notifier {
 
-    def static notifyMessage(String message){
+    static def notifyMessage(String message){
         println(message)
     }
 }
