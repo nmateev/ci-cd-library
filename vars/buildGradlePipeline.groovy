@@ -34,9 +34,9 @@ def call(){
                     script {
 
                         if (params.SKIP_TESTS) {
-                            sh './gradlew clean build'
-                        } else {
                             sh './gradlew clean build -x test'
+                        } else {
+                            sh './gradlew clean build'
                         }
                     }
                 }
