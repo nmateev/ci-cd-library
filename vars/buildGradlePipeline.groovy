@@ -1,15 +1,20 @@
-import utils.Notifier
 
 def call(){
 
     pipeline {
         agent { label 'generic' }
         stages {
-            stage ('Clean workspace') {
-                steps {
-                    cleanWs()
-                    sh 'pwd'
-                    sh 'ls'
+            script {
+                if (params.CLEAN_WORKSPACE){
+                    stage ('Clean workspace') {
+                        steps {
+                            println('Cleaning working directory')
+                            cleanWs()
+                            sh 'pwd'
+                            sh 'ls'
+
+                        }
+                    }
                 }
             }
 
@@ -24,13 +29,29 @@ def call(){
             stage ('Build') {
                 steps {
                     sh 'chmod +x ./gradlew'
-                    sh './gradlew clean build'
+                    script {
+
+                        if (params.SKIP_TESTS) {
+                            sh './gradlew clean build'
+                        } else {
+                            sh './gradlew clean build -x test'
+                        }
+                    }
                 }
             }
 
             stage ('Archive') {
                 steps {
-                    archiveArtifacts 'build/libs/*.jar'
+                    script {
+                        try {
+                            archiveArtifacts params.ARCHIVE
+
+                        } catch (Exception e) {
+                            println('Bad archive configuration')
+                            println(e)
+
+                        }
+                    }
                 }
             }
         }
