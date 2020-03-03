@@ -1,5 +1,6 @@
 
 def call(){
+
     pipeline {
         agent { label 'generic' }
         stages {
@@ -30,6 +31,15 @@ def call(){
                 steps {
                     archiveArtifacts 'build/libs/*.jar'
                 }
+            }
+            post {
+                success {
+                    Notifier.notifyMessage("Successful build from branch: ${env.BRANCH_NAME}")
+                }
+                failure {
+                    Notifier.notifyMessage("Unsuccessful build number: ${env.BUILD_ID} from ${env.BRANCH_NAME}")
+                }
+
             }
         }
     }
