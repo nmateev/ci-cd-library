@@ -10,8 +10,11 @@ def call(){
                         if (params.CLEAN_WORKSPACE) {
                             println('Cleaning working directory')
                             cleanWs()
-                            sh 'pwd'
-                            sh 'ls'
+                            sh """
+                                  pwd
+                                  ls
+                               """
+
                         } else {
                             println('Skipping cleaning of workspace')
                         }
