@@ -4,17 +4,19 @@ def call(){
     pipeline {
         agent { label 'generic' }
         stages {
-            script {
-                if (params.CLEAN_WORKSPACE){
-                    stage ('Clean workspace') {
-                        steps {
+            stage ('Clean workspace') {
+                steps {
+                    script {
+                        if (params.CLEAN_WORKSPACE) {
                             println('Cleaning working directory')
                             cleanWs()
                             sh 'pwd'
                             sh 'ls'
-
+                        } else {
+                            println('Skipping cleaning of workspace')
                         }
                     }
+
                 }
             }
 
